@@ -1,4 +1,3 @@
-
 --- Q1 Find the names of all reviewers who rated Gone with the Wind.
 SELECT DISTINCT re.name
 FROM Rating r
@@ -72,6 +71,16 @@ WHERE rID IN (SELECT rID
               GROUP BY rID
               HAVING COUNT(*) >= 3);
  
+ --- Q8 Challenge
+SELECT DISTINCT re.name
+FROM Rating r1
+JOIN Rating r2 ON r2.rID = r1.rID
+   AND r2.rowid != r1.rowid
+JOIN Rating r3 ON r3.rID = r1.rID
+   AND r3.rowid != r1.rowid
+   AND r3.rowid != r2.rowid
+JOIN Reviewer re ON re.rID = r1.rID;
+ 
 --- Q9 Some directors directed more than one movie. For all such directors, return the titles of all movies directed by them, along with the director name. Sort by director name, then movie title. (As an extra challenge, try writing the query both with and without COUNT.)
 SELECT
    title
@@ -84,6 +93,16 @@ WHERE director IN(SELECT director
 ORDER BY
    director
    , title;
+   
+ --- Q9 Challenge
+SELECT
+   m1.title
+   , m1.director
+FROM Movie m1
+JOIN Movie m2 ON m2.director = m1.director AND m2.mID != m1.mID
+ORDER BY
+   m1.director
+   , m1.title;
  
 --- Q10 Find the movie(s) with the highest average rating. Return the movie title(s) and average rating. (Hint: This query is more difficult to write in SQLite than other systems; you might think of it as finding the highest average rating and then choosing the movie(s) with that average rating.)
 SELECT
