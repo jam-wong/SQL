@@ -1,4 +1,3 @@
-
 --- Q1 Find the names of all students who are friends with someone named Gabriel.
 SELECT name
 FROM Highschooler
